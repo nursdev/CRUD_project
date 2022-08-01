@@ -74,13 +74,13 @@ public class BooksController {
         return "books/info";
     }
 
-    @PostMapping("{id}")
+    @PatchMapping("{id}/release")
     public String release(@PathVariable("id") int id) {
         bookDAO.setRelease(id);
         return "redirect:/books";
     }
 
-    @PostMapping("{id}/add")
+    @PatchMapping("{id}/appoint")
     public String appointBook(@ModelAttribute("person") Person person, @PathVariable("id") int book_id) {
         bookDAO.setAppoint(book_id, person.getPerson_id());
         return "redirect:/books";
