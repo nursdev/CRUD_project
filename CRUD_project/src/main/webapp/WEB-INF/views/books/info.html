@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Information about book</title>
+</head>
+<body>
+<p th:text="${book.getName() + ', ' + book.getAuthor() + ', ' + book.getYear()}"/>
+<br/>
+
+<div th:if="${book.getPerson_id()} != null">
+    <p>Книга сейчас у: <span th:text="${person.getFio()}"/></p>
+    <form th:method="POST" th:action="@{/books/{id} (id = ${book.getBook_id()})}">
+        <input type="submit" value="Освободить книгу">
+    </form>
+
+</div>
+
+<div th:unless="${book.getPerson_id()} != null">
+    <form th:method="POST" th:action="@{/books/{id}/add/(id = ${book.getBook_id()})}">
+        <p>Книга свободна. Кому назначить ее?</p>
+        <label for="person">Выберите человека: </label>
+        <select id="person" th:object="${defPerson}" th:field="*{person_id}">
+            <option th:each="person : ${people}" th:value="${person.getPerson_id()}" th:text="${person.getFio()}"/>
+        </select>
+        <input type="submit" value="Назначить книгу">
+    </form>
+</div>
+<hr/>
+<br/>
+
+</body>
+</html>
